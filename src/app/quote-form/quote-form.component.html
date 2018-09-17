@@ -1,0 +1,50 @@
+<div class="container">
+  <h1>Create A Quote</h1>
+  <form #heroForm="ngForm" (submit)="onSubmit(quote)">
+    <div class="form-group">
+      <label for="exampleFormControlTextarea1">Add your quote</label>
+      <textarea name="quote" class="form-control" id="quote" [(ngModel)]='model.quote' required #quote="ngModel" #quote
+        rows="3"></textarea>
+    </div>
+
+    <button [disabled]="quote.value.trim() < 1" type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
+
+<hr>
+
+<div class="container">
+  <div *ngIf="quote.value" class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">#</h3>
+      <div class="actions pull-right">
+        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> <i>0</i>
+        <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> <i>0</i>
+      </div>
+    </div>
+    <div class="panel-body">
+      {{model.quote}}
+    </div>
+  </div>
+
+  <div class="quote" *ngFor="let quote of quotes.reverse()">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">#{{quote.id}}</h3>
+        <div>
+          <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" (click)="onLike(quote.id)"></span> <i>{{quote.likes}}</i>
+          <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" (click)="onDislike(quote.id)"></span> <i>{{quote.dislikes}}</i>
+        </div>
+      </div>
+      <div class="panel-body split">
+        {{quote.quote}}
+        <div class="pull-right">
+          <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="removeQuote(quote.id)"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="snackbar">{{ created }}</div>
+<div id="deleted">{{ deleted }}</div>
